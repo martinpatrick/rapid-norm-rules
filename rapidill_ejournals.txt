@@ -1,0 +1,48 @@
+rule "remove DOAJ"
+priority 10
+when
+(TRUE)
+then
+removeField "949" if (exists "949.z. 61110976638852340|61111061245432000")
+removeSubField "949.z"
+end
+
+rule "delete unlendable portfolios"
+priority 8
+when
+(TRUE)
+then
+removeField "949" if (not exists "949.x.lendable")
+removeSubField "949.x"
+end
+
+rule "delete inactive portfolios"
+priority 7
+when
+(TRUE)
+then
+removeField "949" if (not exists "949.y.Available")
+removeSubField "949.y"
+end
+
+rule "delete non journal portfolios"
+priority 5
+when
+(TRUE)
+then
+removeField "949" if (not exists "949.g.JOURNAL")
+removeSubField "949.g"
+end
+
+rule "remove fields for tidy"
+priority 2
+when
+(TRUE)
+then
+removeField "3*"
+removeField "4*"
+removeField "5*"
+removeField "6*"
+removeField "8*"
+removeField "954"
+end

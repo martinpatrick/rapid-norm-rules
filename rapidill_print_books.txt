@@ -1,0 +1,53 @@
+rule "remove microfilm"
+priority 10
+when
+(TRUE)
+then
+removeField "954" if (exists "337.a.micro*")
+end
+
+rule "remove withdrawn"
+priority 9
+when
+(TRUE)
+then
+removeField "954" if (exists "954.r.*Withdrawn*")
+end
+
+rule "remove process types"
+priority 8
+when
+(TRUE)
+then
+removeField "954" if (exists "954.x.ACQ|LOST_LOAN|TECHNICAL|MISSING|LOST_LOAN_AND_PAID|WORK_ORDER_DEPARTMENT")
+removeSubField "954.x"
+end
+
+rule "remove nonbooks"
+priority 5
+when
+(TRUE)
+then
+removeField "954" if (not exists "954.w.BOOK")
+removeSubField "954.w"
+end
+
+rule "Delete non OCLC 035"
+when
+TRUE
+then
+RemoveField "035" if (not exists "035.a.*OCoLC*")
+end
+
+rule "remove fields for tidy"
+priority 2
+when
+(TRUE)
+then
+removeField "3*"
+removeField "4*"
+removeField "5*"
+removeField "6*"
+removeField "8*"
+removeField "949"
+end
